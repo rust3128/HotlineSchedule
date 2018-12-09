@@ -9,7 +9,7 @@
 
 
 // Умный указатель на файл логирования
-QScopedPointer<QFile>   m_logFile;
+static QScopedPointer<QFile>   m_logFile;
 
 // Объявляение обработчика
 void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
@@ -39,13 +39,9 @@ int main(int argc, char *argv[])
     qInfo(logInfo()) << QObject::tr("Запуск программы.");
 
     DataBase db;
-    if(!db.connectToDatabase()){
-        qCritical(logCritical()) << QObject::tr("Не подключились к БД. Закрываемся.");
-        return 1;
-    }
 
+    MainWindow w(db.connectToDatabase());
 
-    MainWindow w;
     w.show();
 
     return a.exec();

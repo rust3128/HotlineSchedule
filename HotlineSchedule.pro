@@ -27,15 +27,18 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     DataBase/database.cpp \
-    LoggingCategories/loggingcategories.cpp
+    LoggingCategories/loggingcategories.cpp \
+    OptionsDialog/optionsdialog.cpp
 
 HEADERS += \
         mainwindow.h \
     DataBase/database.h \
-    LoggingCategories/loggingcategories.h
+    LoggingCategories/loggingcategories.h \
+    OptionsDialog/optionsdialog.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    OptionsDialog/optionsdialog.ui
 
 DISTFILES += \
     SQL/database.sql

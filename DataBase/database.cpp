@@ -2,6 +2,8 @@
 #include "LoggingCategories/loggingcategories.h"
 #include <QMessageBox>
 #include <QSqlError>
+#include <QSettings>
+#include <QFile>
 
 DataBase::DataBase(QObject *parent) : QObject(parent)
 {
@@ -10,6 +12,15 @@ DataBase::DataBase(QObject *parent) : QObject(parent)
 
 bool DataBase::connectToDatabase()
 {
+
+    QSettings settings("HotlineSchedule.cfg", QSettings::IniFormat);
+    QFile cfgfile("HotlineDesktop.cfg");
+    if (!cfgfile.exists()){
+
+        return false;
+    }
+
+
     db = QSqlDatabase::addDatabase("QMYSQL");
 
     db.setHostName("10.28.8.78");

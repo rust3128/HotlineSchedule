@@ -25,3 +25,12 @@ CREATE TABLE `glsheduler`.`userrole` (
 INSERT INTO `glsheduler`.`userrole` (`role_ID`, `rolename`) VALUES ('0', 'Администратор');
 INSERT INTO `glsheduler`.`userrole` (`role_ID`, `rolename`) VALUES ('1', 'Пользователь');
 INSERT INTO `glsheduler`.`userrole` (`role_ID`, `rolename`) VALUES ('2', 'Просмотр');
+
+CREATE TABLE options (
+  option_id INT(11) UNSIGNED NOT NULL,
+  value VARCHAR(255) NOT NULL,
+  comment VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (option_id)
+)
+
+INSERT INTO options(option_id, value, comment) VALUES(1000, 'true', 'Использовать аутентификацию');
