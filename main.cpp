@@ -39,7 +39,6 @@ int main(int argc, char *argv[])
     qInfo(logInfo()) << QObject::tr("Запуск программы.");
 
     DataBase db;
-
     MainWindow w(db.connectToDatabase());
 
     w.show();

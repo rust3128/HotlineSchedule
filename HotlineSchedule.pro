@@ -26,19 +26,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    DataBase/database.cpp \
     LoggingCategories/loggingcategories.cpp \
-    OptionsDialog/optionsdialog.cpp
+    OptionsDialog/optionsdialog.cpp \
+    DataBase/database.cpp \
+    UsersDialog/usersdialog.cpp
 
 HEADERS += \
         mainwindow.h \
-    DataBase/database.h \
     LoggingCategories/loggingcategories.h \
-    OptionsDialog/optionsdialog.h
+    OptionsDialog/optionsdialog.h \
+    DataBase/database.h \
+    UsersDialog/usersdialog.h
 
 FORMS += \
         mainwindow.ui \
-    OptionsDialog/optionsdialog.ui
+    OptionsDialog/optionsdialog.ui \
+    UsersDialog/usersdialog.ui
 
 DISTFILES += \
     SQL/database.sql

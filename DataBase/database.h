@@ -9,13 +9,13 @@ class DataBase : public QObject
     Q_OBJECT
 public:
     explicit DataBase(QObject *parent = nullptr);
-    bool connectToDatabase();
+    static bool connectToDatabase();
 
 signals:
 
 public slots:
 private:
-    QSqlDatabase db;
+
 };
 
 #endif // DATABASE_H

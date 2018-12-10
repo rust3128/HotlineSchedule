@@ -14,20 +14,22 @@ bool DataBase::connectToDatabase()
 {
 
     QSettings settings("HotlineSchedule.cfg", QSettings::IniFormat);
-    QFile cfgfile("HotlineDesktop.cfg");
+    QFile cfgfile("HotlineSchedule.cfg");
     if (!cfgfile.exists()){
 
         return false;
     }
 
 
-    db = QSqlDatabase::addDatabase("QMYSQL");
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
 
-    db.setHostName("10.28.8.78");
-    db.setDatabaseName("glsheduler");
-    db.setUserName("htuser");
-    db.setPassword("SecretPassword");
 
+    settings.beginGroup("MYSQL");
+    db.setHostName(settings.value("HostName").toString());
+    db.setDatabaseName(settings.value("DataBase").toString());
+    db.setUserName(settings.value("User").toString());
+    db.setPassword(settings.value("Password").toString());
+    settings.endGroup();
 
     if(!db.open()) {
         qCritical(logCritical()) <<  "Не возможно подключиться к базе данных." << endl << "Причина:" << db.lastError().text();

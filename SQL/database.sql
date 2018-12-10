@@ -34,3 +34,48 @@ CREATE TABLE options (
 )
 
 INSERT INTO options(option_id, value, comment) VALUES(1000, 'true', 'Использовать аутентификацию');
+
+ALTER TABLE `glsheduler`.`users`
+ADD COLUMN `phone` VARCHAR(45) NOT NULL DEFAULT 'Не указан' AFTER `pass`,
+ADD COLUMN `email` VARCHAR(45) NOT NULL DEFAULT 'Не указан' AFTER `phone`,
+ADD COLUMN `phonework` VARCHAR(45) NOT NULL DEFAULT 'Не указан' AFTER `email`,
+ADD COLUMN `phonehome` VARCHAR(45) NOT NULL DEFAULT 'Не указан' AFTER `phonework`;
+
+
+CREATE TABLE `glsheduler`.`logs` (
+  `log_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `dat` DATETIME NOT NULL,
+  `logtype_id` INT UNSIGNED NOT NULL,
+  `info` VARCHAR(255) NULL,
+  PRIMARY KEY (`log_id`));
+
+
+CREATE TABLE `glsheduler`.`logtype` (
+  `logtype_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`logtype_id`));
+
+INSERT INTO `glsheduler`.`logtype` (`name`) VALUES ('Добавление пользователя');
+INSERT INTO `glsheduler`.`logtype` (`name`) VALUES ('Изменение данных пользователя');
+INSERT INTO `glsheduler`.`logtype` (`name`) VALUES ('Деактивация пользователя');
+
+DROP TRIGGER IF EXISTS `glsheduler`.`users_AFTER_INSERT`;
+
+DELIMITER $$
+USE `glsheduler`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `glsheduler`.`users_AFTER_INSERT` AFTER INSERT ON `users` FOR EACH ROW
+BEGIN
+        INSERT INTO logs (dat, logtype_id, info)
+    VALUES (NOW(), 1, NEW.login);
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS `glsheduler`.`users_AFTER_UPDATE`;
+DELIMITER $$
+USE `glsheduler`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `glsheduler`.`users_AFTER_UPDATE` AFTER UPDATE ON `users` FOR EACH ROW
+BEGIN
+        INSERT INTO logs (dat, logtype_id, info)
+    VALUES (NOW(), 2, NEW.login);
+END$$
+DELIMITER ;

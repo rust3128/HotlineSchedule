@@ -18,6 +18,10 @@ public:
     explicit MainWindow(bool isConnect, QWidget *parent = nullptr);
     ~MainWindow();
     void show();
+private slots:
+    void on_actionOptions_triggered();
+    void on_actionUsers_triggered();
+
 private:
     Ui::MainWindow *ui;
     bool m_isConnectDB;
