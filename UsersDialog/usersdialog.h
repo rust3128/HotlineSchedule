@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QSqlRelationalTableModel>
+#include <QSqlTableModel>
 
 namespace Ui {
 class UsersDialog;
@@ -16,6 +17,9 @@ public:
     explicit UsersDialog(QWidget *parent = nullptr);
     ~UsersDialog();
 
+private slots:
+        void onCheckBoxChecked(bool isChecked);
+        void on_pushButtonAdd_clicked();
 
 private:
     Ui::UsersDialog *ui;
@@ -23,6 +27,7 @@ private:
 private:
     void createModel();
     void createUI();
+
 };
 
 #endif // USERSDIALOG_H

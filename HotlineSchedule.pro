@@ -36,7 +36,8 @@ HEADERS += \
     LoggingCategories/loggingcategories.h \
     OptionsDialog/optionsdialog.h \
     DataBase/database.h \
-    UsersDialog/usersdialog.h
+    UsersDialog/usersdialog.h \
+    UsersDialog/checkboxdelegate.h
 
 FORMS += \
         mainwindow.ui \
