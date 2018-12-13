@@ -22,6 +22,8 @@ private slots:
     void on_actionOptions_triggered();
     void on_actionUsers_triggered();
 
+    void on_calendarWidget_selectionChanged();
+
 private:
     Ui::MainWindow *ui;
     bool m_isConnectDB;

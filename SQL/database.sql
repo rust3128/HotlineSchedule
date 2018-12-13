@@ -8,14 +8,14 @@ CREATE DATABASE glsheduler;
 
 
 CREATE TABLE `glsheduler`.`users` (
-  `user_ID` INT NOT NULL AUTO_INCREMENT,
+  `userid` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
   `fio` VARCHAR(45) NOT NULL,
-  `pass` VARCHAR(45) NOT NULL,
-  `userrole` INT NOT NULL DEFAULT 1,
-  `isactive` TINYINT NOT NULL DEFAULT 1,
-  PRIMARY KEY (`user_ID`))
-COMMENT = 'Список пользователей';
+  `roleid` INT UNSIGNED NOT NULL,
+  `isactive` VARCHAR(5) NOT NULL DEFAULT 'true',
+  PRIMARY KEY (`userid`),
+  INDEX `loginIdx` (`login` ASC));
 
 CREATE TABLE `glsheduler`.`userrole` (
   `role_ID` INT UNSIGNED NOT NULL DEFAULT 1,

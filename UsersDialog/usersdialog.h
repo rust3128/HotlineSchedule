@@ -1,8 +1,8 @@
 #ifndef USERSDIALOG_H
 #define USERSDIALOG_H
 
+#include "tableusersmodel.h"
 #include <QDialog>
-#include <QSqlRelationalTableModel>
 #include <QSqlTableModel>
 
 namespace Ui {
@@ -18,16 +18,18 @@ public:
     ~UsersDialog();
 
 private slots:
-        void onCheckBoxChecked(bool isChecked);
-        void on_pushButtonAdd_clicked();
+    void on_pushButtonAdd_clicked();
+
+    void on_pushButtonEdit_clicked();
+
+    void on_pushButtonClose_clicked();
 
 private:
     Ui::UsersDialog *ui;
-    QSqlRelationalTableModel *modelUsers;
+    TableUsersModel *modelUsers;
 private:
     void createModel();
     void createUI();
-
 };
 
 #endif // USERSDIALOG_H

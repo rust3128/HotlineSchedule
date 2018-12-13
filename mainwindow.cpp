@@ -45,3 +45,8 @@ void MainWindow::on_actionUsers_triggered()
     usersDlg->move(this->geometry().center().x() - usersDlg->geometry().center().x(), this->geometry().center().y() - usersDlg->geometry().center().y());
     usersDlg->exec();
 }
+
+void MainWindow::on_calendarWidget_selectionChanged()
+{
+    ui->label->setText(ui->calendarWidget->selectedDate().toString("dd MMMM yyyy, dddd"));
+}

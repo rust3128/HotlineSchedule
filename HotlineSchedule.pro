@@ -29,7 +29,9 @@ SOURCES += \
     LoggingCategories/loggingcategories.cpp \
     OptionsDialog/optionsdialog.cpp \
     DataBase/database.cpp \
-    UsersDialog/usersdialog.cpp
+    UsersDialog/usersdialog.cpp \
+    tableusersmodel.cpp \
+    UsersDialog/edituserdialog.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -37,12 +39,14 @@ HEADERS += \
     OptionsDialog/optionsdialog.h \
     DataBase/database.h \
     UsersDialog/usersdialog.h \
-    UsersDialog/checkboxdelegate.h
+    tableusersmodel.h \
+    UsersDialog/edituserdialog.h
 
 FORMS += \
         mainwindow.ui \
     OptionsDialog/optionsdialog.ui \
-    UsersDialog/usersdialog.ui
+    UsersDialog/usersdialog.ui \
+    UsersDialog/edituserdialog.ui
 
 DISTFILES += \
     SQL/database.sql
