@@ -31,7 +31,8 @@ SOURCES += \
     DataBase/database.cpp \
     UsersDialog/usersdialog.cpp \
     tableusersmodel.cpp \
-    UsersDialog/edituserdialog.cpp
+    UsersDialog/edituserdialog.cpp \
+    CalendarsDialog/calendarsdialog.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,13 +41,15 @@ HEADERS += \
     DataBase/database.h \
     UsersDialog/usersdialog.h \
     tableusersmodel.h \
-    UsersDialog/edituserdialog.h
+    UsersDialog/edituserdialog.h \
+    CalendarsDialog/calendarsdialog.h
 
 FORMS += \
         mainwindow.ui \
     OptionsDialog/optionsdialog.ui \
     UsersDialog/usersdialog.ui \
-    UsersDialog/edituserdialog.ui
+    UsersDialog/edituserdialog.ui \
+    CalendarsDialog/calendarsdialog.ui
 
 DISTFILES += \
     SQL/database.sql

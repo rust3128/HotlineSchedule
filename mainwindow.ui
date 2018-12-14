@@ -87,6 +87,7 @@
     </property>
     <addaction name="actionOptions"/>
     <addaction name="actionUsers"/>
+    <addaction name="actionCalendar"/>
    </widget>
    <addaction name="menuSettings"/>
   </widget>
@@ -107,6 +108,11 @@
   <action name="actionUsers">
    <property name="text">
     <string>Пользователи</string>
+   </property>
+  </action>
+  <action name="actionCalendar">
+   <property name="text">
+    <string>Календари</string>
    </property>
   </action>
  </widget>

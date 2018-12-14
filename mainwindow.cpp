@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "UsersDialog/usersdialog.h"
+#include "CalendarsDialog/calendarsdialog.h"
 
 MainWindow::MainWindow(bool isConnect, QWidget *parent) :
     QMainWindow(parent),
@@ -49,4 +50,10 @@ void MainWindow::on_actionUsers_triggered()
 void MainWindow::on_calendarWidget_selectionChanged()
 {
     ui->label->setText(ui->calendarWidget->selectedDate().toString("dd MMMM yyyy, dddd"));
+}
+
+void MainWindow::on_actionCalendar_triggered()
+{
+    CalendarsDialog *calDld = new CalendarsDialog();
+    calDld->exec();
 }

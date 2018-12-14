@@ -24,6 +24,8 @@ private slots:
 
     void on_calendarWidget_selectionChanged();
 
+    void on_actionCalendar_triggered();
+
 private:
     Ui::MainWindow *ui;
     bool m_isConnectDB;
