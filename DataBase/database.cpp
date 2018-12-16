@@ -1,6 +1,7 @@
 #include "database.h"
 #include "LoggingCategories/loggingcategories.h"
 #include <QMessageBox>
+#include <QSqlQuery>
 #include <QSqlError>
 #include <QSettings>
 #include <QFile>
@@ -38,5 +39,7 @@ bool DataBase::connectToDatabase()
                               QMessageBox::Cancel);
         return false;
     }
+    QSqlQuery q;
+    q.exec("SET lc_time_names = ru_RU");
     return true;
 }
