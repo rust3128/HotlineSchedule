@@ -32,7 +32,8 @@ SOURCES += \
     UsersDialog/usersdialog.cpp \
     tableusersmodel.cpp \
     UsersDialog/edituserdialog.cpp \
-    CalendarsDialog/calendarsdialog.cpp
+    CalendarsDialog/calendarsdialog.cpp \
+    CalendarsDialog/calendarmodel.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +43,8 @@ HEADERS += \
     UsersDialog/usersdialog.h \
     tableusersmodel.h \
     UsersDialog/edituserdialog.h \
-    CalendarsDialog/calendarsdialog.h
+    CalendarsDialog/calendarsdialog.h \
+    CalendarsDialog/calendarmodel.h
 
 FORMS += \
         mainwindow.ui \
