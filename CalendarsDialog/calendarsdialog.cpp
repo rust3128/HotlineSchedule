@@ -9,8 +9,10 @@ CalendarsDialog::CalendarsDialog(QWidget *parent) :
     ui->setupUi(this);
     createModels();
     createUI();
-}
+    yearNew = ui->dateEdit->date().year();
 
+    connect(this,&CalendarsDialog::signalsMonthIDCorrect,this,&CalendarsDialog::slotCheckMonthID);
+}
 CalendarsDialog::~CalendarsDialog()
 {
     delete ui;
@@ -37,19 +39,28 @@ void CalendarsDialog::createUI()
     ui->comboBox->setModelColumn(2);
     ui->comboBox->setCurrentIndex(-1);
 
+
     ui->tableView->setModel(modelCalendar);
     ui->tableView->hideColumn(0);
     ui->tableView->hideColumn(1);
     ui->tableView->verticalHeader()->hide();
+
+    ui->dateEdit->setDate(QDate::currentDate());
+    ui->dateEdit->setMinimumDate(QDate(QDate::currentDate().year()-1,1,1));
+    ui->comboBoxNewMonth->setCurrentIndex(-1);
 }
 
 void CalendarsDialog::on_comboBox_activated(int idx)
 {
+
+
     int monthID = modelMonth->data(modelMonth->index(idx,1)).toInt();
     strFilter = QString("monthID=%1")
             .arg(monthID);
     modelCalendar->setFilter(strFilter);
     modelCalendar->select();
+
+    qInfo(logInfo()) << "First day" << modelCalendar->index(0,2).data().toString();
 
 }
 
@@ -72,5 +83,59 @@ void CalendarsDialog::on_tableView_doubleClicked(const QModelIndex &idx)
     if(!q.exec()) qCritical(logCritical()) << "Не возможно установить статус дня" << q.lastError().text();
 
     modelCalendar->select();
+
+}
+
+void CalendarsDialog::on_pushButtonClose_clicked()
+{
+    this->reject();
+}
+
+
+
+void CalendarsDialog::on_comboBoxNewMonth_activated(int idx)
+{
+    monthNew = idx+1;
+    emit signalsMonthIDCorrect(yearNew*100+monthNew);
+
+}
+
+void CalendarsDialog::slotCheckMonthID(int ID)
+{
+    QSqlQuery q;
+    q.prepare("SELECT EXISTS (SELECT * FROM calendar WHERE monthID = :id )");
+    q.bindValue(":id",ID);
+    if(!q.exec()) qCritical(logCritical()) << Q_FUNC_INFO  << "Невозможно получить ID месяца" << q.lastError().text();
+    q.next();
+    if(q.value(0).toInt()==1) {
+        ui->pushButtonNewCalendar->setDisabled(true);
+        ui->pushButtonNewCalendar->setText("Календарь существует");
+    } else {
+        ui->pushButtonNewCalendar->setDisabled(false);
+        ui->pushButtonNewCalendar->setText("Создать");
+    }
+}
+
+
+
+void CalendarsDialog::on_dateEdit_userDateChanged(const QDate &date)
+{
+    yearNew = date.year();
+    emit signalsMonthIDCorrect(yearNew*100+monthNew);
+}
+
+void CalendarsDialog::on_pushButtonNewCalendar_clicked()
+{
+    QSqlQuery q;
+    q.prepare("call filling_the_calendar(:month,:year)");
+    q.bindValue(":month", monthNew);
+    q.bindValue(":year", yearNew);
+    if(!q.exec()){
+        qCritical(logCritical()) << Q_FUNC_INFO  << "Невозможно календарь." << q.lastError().text();
+    }
+    else {
+        ui->pushButtonNewCalendar->setText("Календарь добавлен");
+        ui->pushButtonNewCalendar->setEnabled(false);
+    }
 
 }

@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "UsersDialog/usersdialog.h"
 #include "CalendarsDialog/calendarsdialog.h"
+#include <QTextCharFormat>
 
 MainWindow::MainWindow(bool isConnect, QWidget *parent) :
     QMainWindow(parent),
@@ -10,6 +11,20 @@ MainWindow::MainWindow(bool isConnect, QWidget *parent) :
 {
     ui->setupUi(this);
     m_isConnectDB=isConnect;
+
+//    QTextCharFormat format;
+//    QBrush brush;
+//    QColor color;
+
+//    int r=200,g=145,b=234,a=120;
+//    color.setRgb(r,g,b,a);;
+//    brush.setColor(color);
+//    format.setBackground(brush);
+
+//    QDate date = QDate::currentDate();
+//    ui->calendarWidget->setDateTextFormat(date,format);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -55,5 +70,6 @@ void MainWindow::on_calendarWidget_selectionChanged()
 void MainWindow::on_actionCalendar_triggered()
 {
     CalendarsDialog *calDld = new CalendarsDialog();
+    calDld->move(this->geometry().center().x() - calDld->geometry().center().x(), this->geometry().center().y() - calDld->geometry().center().y() );
     calDld->exec();
 }
