@@ -41,6 +41,10 @@ void UsersDialog::on_pushButtonAdd_clicked()
 {
     EditUserDialog *edUserDlg = new EditUserDialog();
     edUserDlg->exec();
+    if(edUserDlg->Accepted){
+        modelUsers->select();
+        ui->tableView->resizeColumnsToContents();
+    }
 }
 
 void UsersDialog::on_pushButtonEdit_clicked()
@@ -51,6 +55,7 @@ void UsersDialog::on_pushButtonEdit_clicked()
         edUserDlg->exec();
         if(edUserDlg->Accepted){
             modelUsers->select();
+            ui->tableView->resizeColumnsToContents();
         }
     }
 }

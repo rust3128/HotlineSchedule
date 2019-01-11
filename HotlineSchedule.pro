@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql concurrent
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -56,4 +56,10 @@ FORMS += \
     CalendarsDialog/calendarsdialog.ui
 
 DISTFILES += \
-    SQL/database.sql
+    SQL/database.sql \
+    icons/bolezn.png \
+    icons/day.png \
+    icons/moon.png \
+    icons/office.png \
+    icons/otpusk.png \
+    icons/sleep.png

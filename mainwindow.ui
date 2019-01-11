@@ -14,65 +14,148 @@
    <string>график Дежурств</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_2">
+   <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,0">
     <item row="0" column="0">
-     <widget class="QSplitter" name="splitter">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+     <widget class="MyCalendarWidget" name="calendarWidget">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
-      <widget class="MyCalendarWidget" name="calendarWidget">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="gridVisible">
-        <bool>true</bool>
-       </property>
-       <property name="horizontalHeaderFormat">
-        <enum>QCalendarWidget::LongDayNames</enum>
-       </property>
-       <property name="verticalHeaderFormat">
-        <enum>QCalendarWidget::NoVerticalHeader</enum>
-       </property>
-      </widget>
-      <widget class="QFrame" name="frame">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
+      <property name="gridVisible">
+       <bool>true</bool>
+      </property>
+      <property name="horizontalHeaderFormat">
+       <enum>QCalendarWidget::LongDayNames</enum>
+      </property>
+      <property name="verticalHeaderFormat">
+       <enum>QCalendarWidget::NoVerticalHeader</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QTableWidget" name="tableWidget">
+         <row>
           <property name="text">
-           <string>TextLabel</string>
+           <string/>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_2">
+         </row>
+         <row>
           <property name="text">
-           <string>День:</string>
+           <string/>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QComboBox" name="comboBox"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_3">
+         </row>
+         <column>
           <property name="text">
-           <string>Ночь:</string>
+           <string>Тип</string>
           </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QComboBox" name="comboBox_2"/>
-        </item>
-       </layout>
-      </widget>
+         </column>
+         <column>
+          <property name="text">
+           <string>Дежурный</string>
+          </property>
+         </column>
+         <item row="0" column="0">
+          <property name="text">
+           <string>Ночь</string>
+          </property>
+         </item>
+         <item row="0" column="1">
+          <property name="text">
+           <string>Алфелди</string>
+          </property>
+         </item>
+         <item row="1" column="0">
+          <property name="text">
+           <string>День</string>
+          </property>
+         </item>
+         <item row="1" column="1">
+          <property name="text">
+           <string>Панченко</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Изменения дежурного</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="1" column="0">
+           <widget class="QComboBox" name="comboBox"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>ФИО Дежурного</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QDialogButtonBox" name="buttonBox">
+            <property name="standardButtons">
+             <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Назначить дежурного</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>День:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="comboBox_2"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Ночь:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="comboBox_3"/>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QDialogButtonBox" name="buttonBox_2">
+            <property name="standardButtons">
+             <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>

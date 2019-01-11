@@ -14,7 +14,7 @@
 namespace Ui {
 class CalendarsDialog;
 }
-
+extern void calendarCreate(int month, int year);
 class CalendarsDialog : public QDialog
 {
     Q_OBJECT
@@ -46,6 +46,7 @@ private:
 private:
     void createModels();
     void createUI();
+
 };
 
 #endif // CALENDARSDIALOG_H

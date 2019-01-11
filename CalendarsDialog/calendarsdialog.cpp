@@ -50,6 +50,7 @@ void CalendarsDialog::createUI()
     ui->comboBoxNewMonth->setCurrentIndex(-1);
 }
 
+
 void CalendarsDialog::on_comboBox_activated(int idx)
 {
 
@@ -126,6 +127,7 @@ void CalendarsDialog::on_dateEdit_userDateChanged(const QDate &date)
 
 void CalendarsDialog::on_pushButtonNewCalendar_clicked()
 {
+    ui->pushButtonNewCalendar->setText("Добавление календаря");
     QSqlQuery q;
     q.prepare("call filling_the_calendar(:month,:year)");
     q.bindValue(":month", monthNew);
@@ -136,6 +138,10 @@ void CalendarsDialog::on_pushButtonNewCalendar_clicked()
     else {
         ui->pushButtonNewCalendar->setText("Календарь добавлен");
         ui->pushButtonNewCalendar->setEnabled(false);
+        modelMonth->setQuery("select @i := @i +1 AS id, monthID, DATE_FORMAT(date, '%b %Y') as dat from calendar, (select @i:=0) as z  "
+                                 "group by monthID "
+                                 "order by monthID DESC");
     }
 
 }
+
