@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "LoggingCategories/loggingcategories.h"
 #include "UsersDialog/usersdialog.h"
 #include "CalendarsDialog/calendarsdialog.h"
 #include <QTextCharFormat>
@@ -24,7 +25,8 @@ MainWindow::MainWindow(bool isConnect, QWidget *parent) :
 //    QDate date = QDate::currentDate();
 //    ui->calendarWidget->setDateTextFormat(date,format);
 
-
+    createModels();
+    createUI();
 }
 
 MainWindow::~MainWindow()
@@ -50,6 +52,28 @@ void MainWindow::showOptionsDlg()
         this->close();
 }
 
+void MainWindow::createModels()
+{
+    modelUsers = new QSqlQueryModel();
+    modelUsers->setQuery("SELECT userid, fio FROM users WHERE isactive = 1");
+
+
+}
+
+void MainWindow::createUI()
+{
+//    ui->calendarWidget->setSelectedDate(QDate::currentDate());
+    ui->pushButtonNew->setEnabled(false);
+
+    ui->comboBoxDay->setModel(modelUsers);
+    ui->comboBoxDay->setModelColumn(1);
+    ui->comboBoxNight->setModel(modelUsers);
+    ui->comboBoxNight->setModelColumn(1);
+    on_calendarWidget_selectionChanged();
+}
+
+
+
 void MainWindow::on_actionOptions_triggered()
 {
     showOptionsDlg();
@@ -64,12 +88,85 @@ void MainWindow::on_actionUsers_triggered()
 
 void MainWindow::on_calendarWidget_selectionChanged()
 {
-    ui->label->setText(ui->calendarWidget->selectedDate().toString("dd MMMM yyyy, dddd"));
+    selDay.dat = ui->calendarWidget->selectedDate();
+    ui->labelCurrendDay->setText(selDay.dat.toString("dd MMMM yyyy, dddd"));
+
+    QSqlQuery q;
+    q.prepare("select calendarID, iswork from calendar where date = :dat");
+    q.bindValue(":dat",selDay.dat.toString("yyyy-MM-dd"));
+    if(!q.exec()) qCritical(logCritical()) << "Не удалось получить данные из календаря" << q.lastError().text();
+    q.next();
+    selDay.calendarID=q.value(0).toInt();
+    selDay.iswork=q.value(1).toInt();
+    if(selDay.iswork==1){
+        ui->labelDay->hide();
+        ui->comboBoxDay->hide();
+    } else {
+        ui->labelDay->show();
+        ui->comboBoxDay->show();
+    }
+
+
+    setCurrentWorker();
 }
+
+void MainWindow::setCurrentWorker()
+{
+    QSqlQuery q;
+    ui->comboBoxDay->setCurrentIndex(-1);
+    ui->comboBoxNight->setCurrentIndex(-1);
+    sheduleIDDay = SheduleIDNight = 0;
+    q.prepare("select userID, worktypeID, sheID from shedule where calendarID=:id");
+    q.bindValue(":id", selDay.calendarID);
+    q.exec();
+    while(q.next()){
+        switch (q.value(1).toInt()) {
+        case 1:
+            userIDNight = q.value(0).toInt();
+            sheduleIDDay=q.value(2).toInt();
+            ui->comboBoxNight->setCurrentIndex(userIDNight-1);
+            break;
+        case 2:
+            userIDDay = q.value(0).toInt();
+            SheduleIDNight = q.value(2).toInt();
+            ui->comboBoxDay->setCurrentIndex(userIDDay-1);
+            break;
+        default:
+            break;
+        }
+    }
+
+
+}
+
 
 void MainWindow::on_actionCalendar_triggered()
 {
     CalendarsDialog *calDld = new CalendarsDialog();
     calDld->move(this->geometry().center().x() - calDld->geometry().center().x(), this->geometry().center().y() - calDld->geometry().center().y() );
     calDld->exec();
+}
+
+void MainWindow::on_comboBoxNight_activated(int idx)
+{
+    qInfo(logInfo()) << "IDX" << idx;
+    int userID = modelUsers->data(modelUsers->index(idx,0)).toInt();
+
+    if(userID != userIDNight) {
+        userIDNight = userID;
+        ui->pushButtonNew->setEnabled(true);
+    }
+}
+
+void MainWindow::on_pushButtonNew_clicked()
+{
+    QSqlQuery q;
+
+    q.prepare("call upset_shedule(:m_sheID, :m_calendarID, :m_userID, :m_worktypeID");
+    q.bindValue(":m_sheID", userIDNight);
+    q.bindValue(":m_calendarID", selDay.calendarID);
+    q.bindValue(":m_userID", userIDNight);
+    q.bindValue(":m_worktypeID", 1);
+
+
 }

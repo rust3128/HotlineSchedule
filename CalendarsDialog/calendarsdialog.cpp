@@ -61,7 +61,7 @@ void CalendarsDialog::on_comboBox_activated(int idx)
     modelCalendar->setFilter(strFilter);
     modelCalendar->select();
 
-    qInfo(logInfo()) << "First day" << modelCalendar->index(0,2).data().toString();
+//    qInfo(logInfo()) << "First day" << modelCalendar->index(0,2).data().toString();
 
 }
 
@@ -71,7 +71,7 @@ void CalendarsDialog::on_tableView_doubleClicked(const QModelIndex &idx)
     int dd;
     QString dayStatus = modelCalendar->data(modelCalendar->index(idx.row(),3),Qt::DisplayRole).toString();
     int dayID = modelCalendar->data(modelCalendar->index(idx.row(),0),Qt::DisplayRole).toInt();
-    qInfo(logInfo()) << "dayID" << dayID  << "DayStatus" << dayStatus;
+//    qInfo(logInfo()) << "dayID" << dayID  << "DayStatus" << dayStatus;
     if(dayStatus == "Рабочий")
         dd = 0;
     else
