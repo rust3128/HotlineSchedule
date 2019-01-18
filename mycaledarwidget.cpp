@@ -47,7 +47,8 @@ void MyCalendarWidget::paintCell(QPainter *painter, const QRect &rect, const QDa
                          "LEFT JOIN calendar c ON c.calendarID = s.calendarID "
                          "LEFT JOIN users u ON u.userid = s.userID "
                          "LEFT JOIN worktype w ON w.worktypeID = s.worktypeID "
-                         "where c.date='%1' AND w.worktypeID IN (1,2)")
+                         "where c.date='%1' AND w.worktypeID IN (1,2) "
+                         "order by w.worktypeID DESC")
                 .arg(date.toString("yyyy-MM-dd"));
 
         if(!q.exec(strSQL)) qDebug() << "Не возможно получить данные о дежурствах" << q.lastError().text();

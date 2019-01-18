@@ -15,24 +15,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,0">
-    <item row="0" column="0">
-     <widget class="MyCalendarWidget" name="calendarWidget">
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="gridVisible">
-       <bool>true</bool>
-      </property>
-      <property name="horizontalHeaderFormat">
-       <enum>QCalendarWidget::LongDayNames</enum>
-      </property>
-      <property name="verticalHeaderFormat">
-       <enum>QCalendarWidget::NoVerticalHeader</enum>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1">
      <widget class="QFrame" name="frame">
       <property name="frameShape">
@@ -201,6 +183,24 @@
         </widget>
        </item>
       </layout>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="MyCalendarWidget" name="calendarWidget">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="gridVisible">
+       <bool>true</bool>
+      </property>
+      <property name="horizontalHeaderFormat">
+       <enum>QCalendarWidget::LongDayNames</enum>
+      </property>
+      <property name="verticalHeaderFormat">
+       <enum>QCalendarWidget::NoVerticalHeader</enum>
+      </property>
      </widget>
     </item>
    </layout>

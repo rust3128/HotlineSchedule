@@ -39,6 +39,8 @@ private slots:
 
     void on_pushButtonNew_clicked();
 
+    void on_comboBoxDay_activated(int index);
+
 private:
     Ui::MainWindow *ui;
     bool m_isConnectDB;
@@ -47,7 +49,7 @@ private:
     int userIDDay;
     int sheduleIDDay;
     int userIDNight;
-    int SheduleIDNight;
+    int sheduleIDNight;
 private:
     void showOptionsDlg();
     void createModels();

@@ -115,7 +115,7 @@ void MainWindow::setCurrentWorker()
     QSqlQuery q;
     ui->comboBoxDay->setCurrentIndex(-1);
     ui->comboBoxNight->setCurrentIndex(-1);
-    sheduleIDDay = SheduleIDNight = 0;
+    sheduleIDDay = sheduleIDNight = userIDDay = 0 ;
     q.prepare("select userID, worktypeID, sheID from shedule where calendarID=:id");
     q.bindValue(":id", selDay.calendarID);
     q.exec();
@@ -123,12 +123,12 @@ void MainWindow::setCurrentWorker()
         switch (q.value(1).toInt()) {
         case 1:
             userIDNight = q.value(0).toInt();
-            sheduleIDDay=q.value(2).toInt();
+            sheduleIDNight=q.value(2).toInt();
             ui->comboBoxNight->setCurrentIndex(userIDNight-1);
             break;
         case 2:
             userIDDay = q.value(0).toInt();
-            SheduleIDNight = q.value(2).toInt();
+            sheduleIDDay = q.value(2).toInt();
             ui->comboBoxDay->setCurrentIndex(userIDDay-1);
             break;
         default:
@@ -149,7 +149,6 @@ void MainWindow::on_actionCalendar_triggered()
 
 void MainWindow::on_comboBoxNight_activated(int idx)
 {
-    qInfo(logInfo()) << "IDX" << idx;
     int userID = modelUsers->data(modelUsers->index(idx,0)).toInt();
 
     if(userID != userIDNight) {
@@ -158,15 +157,47 @@ void MainWindow::on_comboBoxNight_activated(int idx)
     }
 }
 
+void MainWindow::on_comboBoxDay_activated(int idx)
+{
+    int userID = modelUsers->data(modelUsers->index(idx,0)).toInt();
+
+    if(userID != userIDDay) {
+        userIDDay = userID;
+        ui->pushButtonNew->setEnabled(true);
+    }
+}
+
+
 void MainWindow::on_pushButtonNew_clicked()
 {
     QSqlQuery q;
 
-    q.prepare("call upset_shedule(:m_sheID, :m_calendarID, :m_userID, :m_worktypeID");
-    q.bindValue(":m_sheID", userIDNight);
+    qInfo(logInfo()) << "sheduleIDNight" << sheduleIDNight << "selDay.calendarID" << selDay.calendarID << "userIDNight" << selDay.calendarID;
+
+    q.prepare("call upset_shedule(:m_sheID, :m_calendarID, :m_userID, :m_worktypeID)");
+    q.bindValue(":m_sheID", sheduleIDNight);
     q.bindValue(":m_calendarID", selDay.calendarID);
     q.bindValue(":m_userID", userIDNight);
     q.bindValue(":m_worktypeID", 1);
+    if(!q.exec()) qInfo(logInfo()) << "Не удалось обновить ночного дежурного" << q.lastError().text();
+    q.finish();
+    if(ui->comboBoxDay->isVisible() && (userIDDay > 0) ) {
+        qInfo(logInfo()) << "ui->comboBoxDay->currentIndex()" << ui->comboBoxDay->currentIndex();
+        q.prepare("call upset_shedule(:m_sheID, :m_calendarID, :m_userID, :m_worktypeID)");
+        q.bindValue(":m_sheID", sheduleIDDay);
+        q.bindValue(":m_calendarID", selDay.calendarID);
+        q.bindValue(":m_userID", userIDDay);
+        q.bindValue(":m_worktypeID", 2);
+        if(!q.exec()) qInfo(logInfo()) << "Не удалось обновить дневного дежурного" << q.lastError().text();
+        q.finish();
+    }
 
+
+
+
+    ui->calendarWidget->update();
+    ui->calendarWidget->repaint();
+    ui->pushButtonNew->setEnabled(false);
 
 }
+
