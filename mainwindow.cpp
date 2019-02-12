@@ -92,10 +92,18 @@ void MainWindow::on_calendarWidget_selectionChanged()
     ui->labelCurrendDay->setText(selDay.dat.toString("dd MMMM yyyy, dddd"));
 
     QSqlQuery q;
-    q.prepare("select calendarID, iswork from calendar where date = :dat");
+    q.prepare("select calendarID, iswork, count(calendarID) from calendar where date = :dat");
     q.bindValue(":dat",selDay.dat.toString("yyyy-MM-dd"));
     if(!q.exec()) qCritical(logCritical()) << "Не удалось получить данные из календаря" << q.lastError().text();
     q.next();
+    if(q.value(2).toInt()==0){
+        ui->groupBoxNewWork->hide();
+        ui->labelNoCalendar->show();
+        return;
+    } else {
+        ui->groupBoxNewWork->show();
+        ui->labelNoCalendar->hide();
+    }
     selDay.calendarID=q.value(0).toInt();
     selDay.iswork=q.value(1).toInt();
     if(selDay.iswork==1){
@@ -172,7 +180,7 @@ void MainWindow::on_pushButtonNew_clicked()
 {
     QSqlQuery q;
 
-    qInfo(logInfo()) << "sheduleIDNight" << sheduleIDNight << "selDay.calendarID" << selDay.calendarID << "userIDNight" << selDay.calendarID;
+    qInfo(logInfo()) << "sheduleIDNight" << sheduleIDNight << "selDay.calendarID" << selDay.calendarID << "userIDNight" << userIDNight;
 
     q.prepare("call upset_shedule(:m_sheID, :m_calendarID, :m_userID, :m_worktypeID)");
     q.bindValue(":m_sheID", sheduleIDNight);
@@ -191,10 +199,6 @@ void MainWindow::on_pushButtonNew_clicked()
         if(!q.exec()) qInfo(logInfo()) << "Не удалось обновить дневного дежурного" << q.lastError().text();
         q.finish();
     }
-
-
-
-
     ui->calendarWidget->update();
     ui->calendarWidget->repaint();
     ui->pushButtonNew->setEnabled(false);
